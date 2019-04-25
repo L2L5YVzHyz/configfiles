@@ -1,1 +1,1 @@
-config files of my linux workstation
+Config files of my linux workstation.
