@@ -1,4 +1,3 @@
-rofi.theme: gruvbox-dark-hard
 rofi.font:  Hack 12
 rofi.modi:  combi
 rofi.lines: 30
