@@ -1,0 +1,7 @@
+rofi.theme: gruvbox-dark-hard
+rofi.font:  Hack 12
+rofi.modi:  combi
+rofi.lines: 30
+rofi.matching: fuzzy
+
+rofi.theme: /home/thad/.config/rofi/DarkBlue.rasi

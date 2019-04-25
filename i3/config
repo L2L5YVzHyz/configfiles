@@ -1,0 +1,176 @@
+set $mod Mod4
+
+exec_always --no-startup-id xrandr --output Displayport-2 --primary
+exec_always --no-startup-id xrandr --output DVI-D-0 --right-of Displayport-2
+exec_always --no-startup-id xsetroot -solid black
+exec_always --no-startup-id redshift -l 44:-87 -t 5500k:3000k -b 1.0:0.75
+exec_always --no-startup-id xmodmap ~/.config/xmodmap/capscontrol
+exec_always --no-startup-id xrdb ~/.Xresources 
+
+workspace $ws1 output DisplayPort-2
+workspace $ws2 output DisplayPort-2
+workspace $ws3 output DisplayPort-2
+workspace $ws4 output DisplayPort-2
+workspace $ws5 output DisplayPort-2
+workspace $ws6 output DisplayPort-2
+workspace $ws7 output Displayport-2
+workspace $ws8 output Displayport-2
+workspace $ws9 output Displayport-2
+workspace $ws10 output DVI-D-0
+
+exec --no-startup-id emacs
+exec --no-startup-id keepassxc --style gtk2
+exec --no-startup-id sakura --class=glances -e glances
+exec --no-startup-id sakura --class=media
+exec --no-startup-id pavucontrol
+
+assign [class="Emacs"] $ws1
+assign [class="keepassxc"] $ws7
+assign [class="Pavucontrol"] $ws7
+assign [class="glances"] $ws9
+assign [class="media"] $ws10
+
+client.focused          #880000 #880000 #880000 #880000   #880000
+client.focused_inactive #000000 #000000 #000000 #000000   #000000
+client.unfocused        #000000 #000000 #000000 #000000   #000000
+client.urgent           #000000 #000000 #000000 #000000   #000000
+client.placeholder      #000000 #000000 #000000 #000000   #000000
+
+client.background       #000000
+
+font pango:DejaVu Sans Mono 0
+
+default_border pixel 5
+
+hide_edge_borders smart
+
+workspace_layout tabbed
+
+for_window [class="[.]*"] floating disable
+
+floating_modifier $mod
+
+bindsym $mod+Return exec xterm
+bindsym $mod+Shift+u exec emacs 
+bindsym $mod+Shift+p exec qutebrowser -B ~/browsing/private
+bindsym $mod+Shift+o exec qutebrowser -B ~/browsing/trusted
+bindsym $mod+Shift+i exec zeal --style gtk2
+
+bindsym $mod+Shift+q kill
+
+bindsym $mod+d exec rofi -show run
+
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 10%+ unmute 
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 10%- unmute 
+bindsym XF86AudioMute exec amixer -D pulse sset Master toggle		   
+bindsym XF86Calculator exec fish ~/.config/i3/lockmeup.fish
+
+bindsym $mod+Shift+m exec amixer -D pulse sset Master 10%+ unmute
+bindsym $mod+Shift+comma exec amixer -D pulse sset Master 10%- unmute
+bindsym $mod+Shift+period exec amixer -D pulse sset Master toggle
+bindsym $mod+Shift+slash exec fish ~/.config/i3/lockmeup.fish
+
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+h split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+
+bindsym $mod+apostrophe [urgent="oldest"] focus
+
+set $ws1 "1 Emacs"
+set $ws2 "2 Browser"
+set $ws3 "3 Documentation"
+set $ws4 "4 Debugger"
+set $ws5 "5 Containers"
+set $ws6 "6 SSH"
+set $ws7 "7 Keepassxc"
+set $ws8 "8 Misc"
+set $ws9 "9 Resources"
+set $ws10 "10 Media"
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+grave workspace back_and_forth
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exit
+
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bar {
+    status_command i3status -c ~/.config/i3status/config
+    
+    font pango:Hack 11, Icons 11
+    
+    tray_output DisplayPort-2
+    
+    colors{
+	background #000000
+    	statusline #FFFFFF
+    	separator  #000000
+
+    	focused_workspace  #880000 #000000 #FFFFFF
+    	active_workspace   #333333 #000000 #FFFFFF
+    	inactive_workspace #000000 #000000 #FFFFFF
+    	urgent_workspace   #000000 #000000 #FFFFFF
+    	binding_mode       #000000 #000000 #FFFFFF
+     }
+}
+
+
